@@ -1,6 +1,6 @@
 <?php
 
-namespace Hpkns\Gadget;
+namespace Hpkns\Objkit;
 
 trait Creatable
 {

@@ -2,8 +2,8 @@
 
 namespace Tests\Fixtures;
 
-use Hpkns\Gadget\Attributes\ArrayOf;
-use Hpkns\Gadget\Creatable;
+use Hpkns\Objkit\Attributes\ArrayOf;
+use Hpkns\Objkit\Creatable;
 
 class Iban
 {

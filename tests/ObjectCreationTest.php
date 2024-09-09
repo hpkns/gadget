@@ -3,10 +3,10 @@
 namespace Hpkns\tests;
 
 use DateTimeImmutable;
-use Hpkns\Gadget\Exceptions\ClassDoesNotExistException;
-use Hpkns\Gadget\Exceptions\InvalidEnumValueException;
-use Hpkns\Gadget\Exceptions\NotImplementedException;
-use Hpkns\Gadget\ObjectBuilder;
+use Hpkns\Objkit\Exceptions\ClassDoesNotExistException;
+use Hpkns\Objkit\Exceptions\InvalidEnumValueException;
+use Hpkns\Objkit\Exceptions\NotImplementedException;
+use Hpkns\Objkit\ObjectBuilder;
 use PHPUnit\Framework\TestCase;
 use Tests\Fixtures\Address;
 use Tests\Fixtures\Date;

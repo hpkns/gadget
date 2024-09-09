@@ -1,6 +1,6 @@
 <?php
 
-namespace Hpkns\Gadget\Attributes;
+namespace Hpkns\Objkit\Attributes;
 
 #[\Attribute]
 class ArrayOf

@@ -3,7 +3,7 @@
 namespace Tests\Fixtures;
 
 use ArrayAccess;
-use Hpkns\Gadget\Creatable;
+use Hpkns\Objkit\Creatable;
 use JsonSerializable;
 
 class Unbuildable

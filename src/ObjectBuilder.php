@@ -1,14 +1,14 @@
 <?php
 
-namespace Hpkns\Gadget;
+namespace Hpkns\Objkit;
 
 use BackedEnum;
-use Hpkns\Gadget\Attributes\ArrayOf;
-use Hpkns\Gadget\Exceptions\ClassDoesNotExistException;
-use Hpkns\Gadget\Exceptions\InvalidEnumValueException;
-use Hpkns\Gadget\Exceptions\MissingParameterException;
-use Hpkns\Gadget\Exceptions\NotImplementedException;
-use Hpkns\Gadget\Exceptions\ObjectCreationException;
+use Hpkns\Objkit\Attributes\ArrayOf;
+use Hpkns\Objkit\Exceptions\ClassDoesNotExistException;
+use Hpkns\Objkit\Exceptions\InvalidEnumValueException;
+use Hpkns\Objkit\Exceptions\MissingParameterException;
+use Hpkns\Objkit\Exceptions\NotImplementedException;
+use Hpkns\Objkit\Exceptions\ObjectCreationException;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionIntersectionType;

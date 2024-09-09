@@ -2,7 +2,7 @@
 
 namespace Tests\Fixtures;
 
-use Hpkns\Gadget\Creatable;
+use Hpkns\Objkit\Creatable;
 
 class InvalidClassHint
 {

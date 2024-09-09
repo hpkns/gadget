@@ -1,4 +1,4 @@
-Gadget
+OBJKIT
 ===
 
 Create data objects from unstructured data
@@ -13,9 +13,9 @@ composer require hpkns/gadget
 
 # Usage
 ```php
-use Hpkns\Gadget\Attributes\ArrayOf;
-use Hpkns\Gadget\Creatable;
-use Hpkns\Gadget\ObjectBuilder;
+use Hpkns\Objkit\Attributes\ArrayOf;
+use Hpkns\Objkit\Creatable;
+use Hpkns\Objkit\ObjectBuilder;
 
 class Person {
     use Creatable;

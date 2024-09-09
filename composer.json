@@ -1,5 +1,5 @@
 {
-    "name": "hpkns/gadget",
+    "name": "hpkns/objkit",
     "description": "Create data objects from unstructured data",
     "type": "library",
     "require": {
@@ -11,7 +11,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Hpkns\\Gadget\\": "src/"
+            "Hpkns\\Objkit\\": "src/"
         }
     },
     "autoload-dev": {

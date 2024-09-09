@@ -1,6 +1,6 @@
 <?php
 
-namespace Hpkns\Gadget\Exceptions;
+namespace Hpkns\Objkit\Exceptions;
 
 use InvalidArgumentException;
 

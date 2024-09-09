@@ -3,7 +3,7 @@
 namespace Tests\Fixtures;
 
 use DateTimeImmutable;
-use Hpkns\Gadget\Creatable;
+use Hpkns\Objkit\Creatable;
 
 class Date
 {
