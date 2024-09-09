@@ -1,0 +1,20 @@
+{
+    "name": "hpkns/gadget",
+    "description": "Create data objects from unstructured data",
+    "type": "library",
+    "require": {
+        "php": ">=8.1"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Hpkns\\Gadget\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Thomas Hupkens",
+            "email": "thomas.hupkens@gmail.com"
+        }
+    ]
+}
