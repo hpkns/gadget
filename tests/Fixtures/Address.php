@@ -10,9 +10,9 @@ class Address
 
     public function __construct(
         readonly public array       $streetAddress,
-        readonly public string      $postalCode,
-        readonly public string      $city,
-        readonly public Country     $country,
+        readonly public ?string     $postalCode = null,
+        readonly public ?string     $city = null,
+        readonly public ?Country    $country = null,
         readonly public AddressType $type = AddressType::Business
     )
     {

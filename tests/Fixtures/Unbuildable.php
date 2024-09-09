@@ -1,0 +1,20 @@
+<?php
+
+namespace Tests\Fixtures;
+
+use ArrayAccess;
+use Hpkns\Gadget\Creatable;
+use JsonSerializable;
+
+class Unbuildable
+{
+    use Creatable;
+
+    public function __construct(
+        public readonly int|string                   $value,
+        public readonly JsonSerializable&ArrayAccess $other
+    )
+    {
+        //
+    }
+}

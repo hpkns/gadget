@@ -12,7 +12,7 @@ class Person
     public function __construct(
         readonly public string   $givenName,
         readonly public string   $familyName,
-        readonly public ?Address $address,
+        readonly public ?Address $address = null,
         #[ArrayOf(Person::class)]
         readonly public array    $parents = [],
     )
