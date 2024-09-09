@@ -12,7 +12,6 @@ class Unbuildable
 
     public function __construct(
         public readonly int|string                   $value,
-        public readonly JsonSerializable&ArrayAccess $other
     )
     {
         //
