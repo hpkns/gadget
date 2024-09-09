@@ -2,7 +2,7 @@
 
 namespace Hpkns\Objkit;
 
-trait Creatable
+trait Buildable
 {
     /**
      *

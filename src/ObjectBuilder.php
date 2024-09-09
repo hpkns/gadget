@@ -185,7 +185,7 @@ class ObjectBuilder
             return $value;
         }
 
-        if ($this->usesTrait($class, Creatable::class)) {
+        if ($this->usesTrait($class, Buildable::class)) {
             return $className::build($value);
         }
 

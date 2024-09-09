@@ -2,11 +2,11 @@
 
 namespace Tests\Fixtures;
 
-use Hpkns\Objkit\Creatable;
+use Hpkns\Objkit\Buildable;
 
 class Address
 {
-    use Creatable;
+    use Buildable;
 
     public function __construct(
         readonly public array       $streetAddress,
