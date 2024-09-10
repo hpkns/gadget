@@ -5,7 +5,6 @@ namespace Hpkns\tests;
 use DateTimeImmutable;
 use Hpkns\Objkit\Exceptions\ClassDoesNotExistException;
 use Hpkns\Objkit\Exceptions\InvalidEnumValueException;
-use Hpkns\Objkit\Exceptions\NotImplementedException;
 use Hpkns\Objkit\ObjectBuilder;
 use PHPUnit\Framework\TestCase;
 use Tests\Fixtures\Address;
@@ -15,7 +14,7 @@ use Tests\Fixtures\Iban;
 use Tests\Fixtures\InvalidClassHint;
 use Tests\Fixtures\ListItem;
 use Tests\Fixtures\Person;
-use Tests\Fixtures\Unbuildable;
+use Tests\Fixtures\WithUnionParam;
 
 class ObjectCreationTest extends TestCase
 {
@@ -90,12 +89,11 @@ class ObjectCreationTest extends TestCase
         ObjectBuilder::build('not a class', []);
     }
 
-    public function test_fail_if_property_has_union_type()
+    public function test_can_build_object_with_union_property()
     {
-        $this->expectException(NotImplementedException::class);
-        $this->expectExceptionMessage("Cannot create parameter value: union types are not supported");
+        $obj = WithUnionParam::build(['value' => 12]);
 
-        Unbuildable::build(['value' => 12]);
+        $this->assertInstanceOf(WithUnionParam::class, $obj);
     }
 
     public function test_enum_casting_fails_if_value_does_not_exist()

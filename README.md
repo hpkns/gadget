@@ -12,13 +12,14 @@ composer require hpkns/gadget
 ```
 
 # Usage
+
 ```php
 use Hpkns\Objkit\Attributes\ArrayOf;
-use Hpkns\Objkit\Creatable;
+use Hpkns\Objkit\Buildable;
 use Hpkns\Objkit\ObjectBuilder;
 
 class Person {
-    use Creatable;
+    use Buildable;
     
     public function __construct(
         readonly string $name,

@@ -7,6 +7,7 @@ use Hpkns\Objkit\Attributes\ArrayOf;
 use Hpkns\Objkit\Exceptions\ClassDoesNotExistException;
 use Hpkns\Objkit\Exceptions\InvalidEnumValueException;
 use Hpkns\Objkit\Exceptions\MissingParameterException;
+use Hpkns\Objkit\Exceptions\NoMatchingTypeFoundException;
 use Hpkns\Objkit\Exceptions\NotImplementedException;
 use Hpkns\Objkit\Exceptions\ObjectCreationException;
 use ReflectionClass;
@@ -109,7 +110,7 @@ class ObjectBuilder
                 } else if ($parameter->allowsNull()) {
                     $formatted[$name] = null;
                 } else {
-                    throw new MissingParameterException("Cannot create object: parameter '{$name}' does not exist, does not have a default value and cannot be null.");
+                    throw new MissingParameterException("Cannot create object of class {$this->class->getName()}: parameter '{$name}' does not exist, does not have a default value and cannot be null.");
                 }
             } else {
                 $formatted[$name] = $this->formatParameterValue($parameter, $parameters[$name]);
@@ -135,7 +136,14 @@ class ObjectBuilder
                 return $this->formatValue($type, $value);
             }
         } elseif ($type instanceof ReflectionUnionType) {
-            throw new NotImplementedException("Cannot create parameter {$parameter->getName()}: union types are not supported");
+            foreach ($type->getTypes() as $t) {
+                try {
+                    return $this->formatValue($t, $value);
+                } catch (ObjectCreationException) {
+                    //
+                }
+            }
+            throw new NoMatchingTypeFoundException("Cannot create parameter {$parameter->getName()}: cannot be converted to any type of {$type}");
         } elseif ($type instanceof ReflectionIntersectionType) {
             throw new NotImplementedException("Cannot create parameter {$parameter->getName()}: intersection types are not supported");
         }
@@ -144,6 +152,8 @@ class ObjectBuilder
     }
 
     /**
+     * Format a value for a given type.
+     *
      * @throws ObjectCreationException
      */
     protected function formatValue(ReflectionNamedType|string $type, mixed $value): mixed
@@ -164,6 +174,8 @@ class ObjectBuilder
     }
 
     /**
+     * Instantiate an object with a given class specification and throw an error is this cannot be achieved.
+     *
      * @param class-string<T> $className
      * @param array           $value
      * @return T
@@ -185,7 +197,7 @@ class ObjectBuilder
             return $value;
         }
 
-        if ($this->usesTrait($class, Creatable::class)) {
+        if ($this->usesTrait($class, Buildable::class)) {
             return $className::build($value);
         }
 
@@ -198,9 +210,9 @@ class ObjectBuilder
 
 
     /**
+     * Instantiate an object with a given enum specification and throw an error is this cannot be achieved.
+     *
      * @param class-string<UnitEnum> $name
-     * @param mixed                  $value
-     * @throws ObjectCreationException
      */
     protected function instantiateEnum(string $name, mixed $value): UnitEnum|BackedEnum
     {
@@ -224,6 +236,9 @@ class ObjectBuilder
         throw new InvalidEnumValueException("Enum {$name} does not not have a value '{$value}'.");
     }
 
+    /**
+     * Get the array type attribute (if any).
+     */
     protected function getArrayTypeAttribute(ReflectionParameter $parameter): ?string
     {
         $attributes = $parameter->getAttributes(ArrayOf::class);
@@ -241,6 +256,7 @@ class ObjectBuilder
     }
 
     /**
+     * Check if a class uses a given trait.
      */
     protected function usesTrait(ReflectionClass $class, string $trait): bool
     {

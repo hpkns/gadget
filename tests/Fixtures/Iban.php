@@ -3,11 +3,11 @@
 namespace Tests\Fixtures;
 
 use Hpkns\Objkit\Attributes\ArrayOf;
-use Hpkns\Objkit\Creatable;
+use Hpkns\Objkit\Buildable;
 
 class Iban
 {
-    use Creatable;
+    use Buildable;
 
     public function __construct(
         public readonly string $value,

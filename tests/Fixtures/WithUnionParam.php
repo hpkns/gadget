@@ -2,15 +2,15 @@
 
 namespace Tests\Fixtures;
 
-use DateTimeImmutable;
 use Hpkns\Objkit\Buildable;
+use JsonSerializable;
 
-class Date
+class WithUnionParam
 {
     use Buildable;
 
     public function __construct(
-        readonly public DateTimeImmutable $value,
+        public readonly JsonSerializable|int|string $value,
     )
     {
         //
