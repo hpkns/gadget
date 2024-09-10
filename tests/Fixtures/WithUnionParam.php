@@ -2,16 +2,15 @@
 
 namespace Tests\Fixtures;
 
-use ArrayAccess;
 use Hpkns\Objkit\Buildable;
 use JsonSerializable;
 
-class Unbuildable
+class WithUnionParam
 {
     use Buildable;
 
     public function __construct(
-        public readonly int|string                   $value,
+        public readonly JsonSerializable|int|string $value,
     )
     {
         //

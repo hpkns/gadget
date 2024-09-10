@@ -2,7 +2,9 @@
 
 namespace Hpkns\Objkit\Exceptions;
 
-class NoMatchingTypeFoundException
-{
+use InvalidArgumentException;
 
+class NoMatchingTypeFoundException extends InvalidArgumentException implements ObjectCreationException
+{
+    //
 }
