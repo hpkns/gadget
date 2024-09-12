@@ -3,6 +3,7 @@
 namespace Hpkns\tests;
 
 use DateTimeImmutable;
+use Hpkns\Objkit\Exceptions\ParameterValueIsNotAnArray;
 use Hpkns\Objkit\Exceptions\ClassDoesNotExistException;
 use Hpkns\Objkit\Exceptions\InvalidEnumValueException;
 use Hpkns\Objkit\ObjectBuilder;
@@ -41,7 +42,7 @@ class ObjectCreationTest extends TestCase
 
         $this->assertCount(2, $people);
 
-        foreach($people as $person) {
+        foreach ($people as $person) {
             $this->assertInstanceOf(Person::class, $person);
         }
     }
@@ -137,5 +138,17 @@ class ObjectCreationTest extends TestCase
         $this->expectException(ClassDoesNotExistException::class);
 
         InvalidClassHint::build(['value' => 'something']);
+    }
+
+    public function test_hinted_type_parameter_fails_if_value_is_not_an_array()
+    {
+        $this->expectException(ParameterValueIsNotAnArray::class);
+        $this->expectExceptionMessage('Cannot create instance of Tests\Fixtures\Address for parameter address: expected array, got string');
+
+        Person::build([
+            'givenName' => 'Luke',
+            'familyName' => 'Skywalker',
+            'address' => 'potatoe',
+        ]);
     }
 }

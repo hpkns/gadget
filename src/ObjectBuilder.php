@@ -4,6 +4,7 @@ namespace Hpkns\Objkit;
 
 use BackedEnum;
 use Hpkns\Objkit\Attributes\ArrayOf;
+use Hpkns\Objkit\Exceptions\ParameterValueIsNotAnArray;
 use Hpkns\Objkit\Exceptions\ClassDoesNotExistException;
 use Hpkns\Objkit\Exceptions\InvalidEnumValueException;
 use Hpkns\Objkit\Exceptions\MissingParameterException;
@@ -17,6 +18,7 @@ use ReflectionMethod;
 use ReflectionNamedType;
 use ReflectionParameter;
 use ReflectionUnionType;
+use Traversable;
 use UnitEnum;
 
 /**
@@ -148,14 +150,14 @@ class ObjectBuilder
 
         if ($type instanceof ReflectionNamedType) {
             if ($type->getName() === 'array' && $hintedType = $this->getArrayTypeAttribute($parameter)) {
-                return array_map(fn(mixed $v) => $this->formatValue($hintedType, $v), (array)$value);
+                return array_map(fn(mixed $v) => $this->formatValue($hintedType, $v, $parameter->getName()), (array)$value);
             } else {
-                return $this->formatValue($type, $value);
+                return $this->formatValue($type, $value, $parameter->getName());
             }
         } elseif ($type instanceof ReflectionUnionType) {
             foreach ($type->getTypes() as $t) {
                 try {
-                    return $this->formatValue($t, $value);
+                    return $this->formatValue($t, $value, $parameter->getName());
                 } catch (ObjectCreationException) {
                     //
                 }
@@ -173,12 +175,12 @@ class ObjectBuilder
      *
      * @throws ObjectCreationException
      */
-    protected function formatValue(ReflectionNamedType|string $type, mixed $value): mixed
+    protected function formatValue(ReflectionNamedType|string $type, mixed $value, string $parameterName): mixed
     {
         if (is_string($type)) {
             return in_array($type, $this->nativeTypes)
                 ? $value
-                : $this->instantiate($type, $value);
+                : $this->instantiate($type, $value, $parameterName);
         } else {
             if ($value === null && $type->allowsNull()) {
                 return null;
@@ -186,7 +188,7 @@ class ObjectBuilder
 
             return $type->isBuiltin()
                 ? $value
-                : $this->instantiate($type->getName(), $value);
+                : $this->instantiate($type->getName(), $value, $parameterName);
         }
     }
 
@@ -194,11 +196,10 @@ class ObjectBuilder
      * Instantiate an object with a given class specification and throw an error is this cannot be achieved.
      *
      * @param class-string<T> $className
-     * @param array           $value
      * @return T
      * @throws ObjectCreationException
      */
-    protected function instantiate(string $className, mixed $value): object
+    protected function instantiate(string $className, mixed $value, string $parameterName): object
     {
         if ($className === 'self' || $className === 'static') {
             $className = $this->class->getName();
@@ -215,6 +216,11 @@ class ObjectBuilder
         }
 
         if ($this->usesTrait($class, Buildable::class)) {
+            if (!is_array($value)) {
+                $type = gettype($value);
+                throw new ParameterValueIsNotAnArray("Cannot create instance of {$class->getName()} for parameter {$parameterName}: expected array, got {$type}");
+            }
+
             return $className::build($value);
         }
 
