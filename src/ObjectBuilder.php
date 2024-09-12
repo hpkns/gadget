@@ -72,6 +72,23 @@ class ObjectBuilder
         return (new static($class))->buildObject($parameters);
     }
 
+    /**
+     * Static helper to build an array of buildable.
+     *
+     * @param class-string<T> $class
+     * @param array<array>    $buildable
+     * @return array<T>
+     *
+     * @throws ObjectCreationException
+     */
+    public static function buildArray(string $class, array $buildable): array
+    {
+        $builder = new static($class);
+
+        return array_map(function ($attributes) use ($builder) {
+            return $builder->buildObject($attributes);
+        }, $buildable);
+    }
 
     /**
      * Create an object of a given class based on non-structured properties.

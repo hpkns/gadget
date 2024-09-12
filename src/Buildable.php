@@ -15,4 +15,16 @@ trait Buildable
     {
         return ObjectBuilder::build(static::class, $attributes);
     }
+
+    /**
+     * Helper to facilitate the creation of objects of Buildables.
+     *
+     * @return array<static>
+     *
+     * @throws ObjectCreationException
+     */
+    public static function buildArray(array $attributes): array
+    {
+        return ObjectBuilder::buildArray(static::class, $attributes);
+    }
 }

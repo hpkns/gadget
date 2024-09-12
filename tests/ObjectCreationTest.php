@@ -26,6 +26,26 @@ class ObjectCreationTest extends TestCase
         $this->assertEquals($iban->value, $value);
     }
 
+    public function test_build_array_function()
+    {
+        $people = Person::buildArray([
+            [
+                'givenName' => 'Luke',
+                'familyName' => 'Skywalyer',
+            ],
+            [
+                'givenName' => 'Anakin',
+                'familyName' => 'Skywalyer',
+            ]
+        ]);
+
+        $this->assertCount(2, $people);
+
+        foreach($people as $person) {
+            $this->assertInstanceOf(Person::class, $person);
+        }
+    }
+
     public function test_classes_with_no_constructor_just_get_built()
     {
         $object = ObjectBuilder::build(EmptyClass::class, ['property' => 'value']);
